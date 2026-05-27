@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "understanding-hdbo"
+version = "1.0.0"
+description = "Reference implementation of MSR and related methods from 'Understanding High-Dimensional Bayesian Optimization' (Papenmeier, Poloczek, Nardi; ICML 2025)."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [
+    { name = "Leonard Papenmeier", email = "leonard.papenmeier@cs.lth.se" },
+    { name = "Matthias Poloczek" },
+    { name = "Luigi Nardi" },
+]
+requires-python = ">=3.11"
+dependencies = [
+    "botorch==0.9.5",
+    "gpytorch>=1.11,<1.12",
+    "numpy>=1.26,<2",
+    "scipy>=1.12",
+    "torch>=2.2,<3",
+]
+
+[project.optional-dependencies]
+bencher = ["bencherscaffold>=0.3.6"]
+dev = ["pytest>=8"]
+
+[project.scripts]
+hdbo-run = "understanding_hdbo.run:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "slow: marks tests that fit GPs / run the BO loop (deselect with '-m \"not slow\"')",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+understanding_hdbo = ["py.typed"]
